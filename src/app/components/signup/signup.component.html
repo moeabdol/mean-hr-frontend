@@ -71,13 +71,14 @@
             <input type="password" name="confirmation" class="form-control"
               placeholder="Password Confirmation"
               formControlName="confirmation" [ngClass]="{
-              'is-invalid': form.controls.confirmation.invalid && (form.controls.confirmation.dirty || form.controls.confirmation.touched),
+              'is-invalid': (form.controls.confirmation.invalid && (form.controls.confirmation.dirty || form.controls.confirmation.touched)) || (form.errors?.mismatch && (form.controls.confirmation.dirty || form.controls.confirmation.touched)),
               'is-valid': form.controls.confirmation.valid && (form.controls.confirmation.dirty || form.controls.confirmation.touched)
               }">
           </div>
 
-          <div class="text-danger" *ngIf="form.controls.confirmation.errors && (form.controls.confirmation.dirty || form.controls.confirmation.touched)">
+          <div class="text-danger" *ngIf="(form.controls.confirmation.errors && (form.controls.confirmation.dirty || form.controls.confirmation.touched)) || (form.errors?.mismatch && (form.controls.confirmation.dirty || form.controls.confirmation.touched))">
             <p *ngIf="form.controls.confirmation.errors?.required">Password confirmation is required.</p>
+            <p *ngIf="form.errors?.mismatch">Password and confirmation do not match.</p>
           </div>
         </div>
 

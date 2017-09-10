@@ -31,6 +31,8 @@ export class SignupComponent implements OnInit {
         Validators.minLength(8)
       ])],
       confirmation: ['', Validators.required]
+    }, {
+      validator: this.validatePasswordConfirmation('password', 'confirmation')
     });
   }
 
@@ -41,6 +43,17 @@ export class SignupComponent implements OnInit {
     } else {
       return { 'invalidEmail': true };
     }
+  }
+
+  validatePasswordConfirmation(password, confirmation) {
+    return (group: FormGroup) => {
+      if (group.controls['password'].value ===
+        group.controls['confirmation'].value) {
+        return null;
+      } else {
+        return { 'mismatch': true };
+      }
+    };
   }
 
   onSubmit() {
