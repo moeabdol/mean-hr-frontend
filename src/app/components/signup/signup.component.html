@@ -5,25 +5,41 @@
       <h2 class="display-5">Sign Up</h2>
       <hr />
 
-      <form>
+      <form [formGroup]="form">
         <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" name="username" autocomplete="off" class="form-control">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+            </div>
+            <input type="text" name="username" autocomplete="off" class="form-control" placeholder="Username">
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" name="email" autocomplete="off" class="form-control">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-envelope" aria-hidden="true"></i>
+            </div>
+            <input type="email" name="email" autocomplete="off" class="form-control" placeholder="Email">
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" name="password" class="form-control">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-key" aria-hidden="true"></i>
+            </div>
+            <input type="password" name="password" class="form-control" placeholder="Password">
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="confirmation">Confirmation</label>
-          <input type="password" name="confirmation" class="form-control">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-lock fa-lg" aria-hidden="true"></i>
+            </div>
+            <input type="password" name="confirmation" class="form-control" placeholder="Password Confirmation">
+          </div>
         </div>
 
         <input type="button" class="btn btn-primary" value="Sign Up">
