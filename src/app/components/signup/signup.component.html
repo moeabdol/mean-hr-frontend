@@ -5,13 +5,24 @@
       <h2 class="display-5">Sign Up</h2>
       <hr />
 
-      <form [formGroup]="form">
+      <form [formGroup]="form" (submit)="onSubmit()">
         <div class="form-group">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-user fa-lg" aria-hidden="true"></i>
             </div>
-            <input type="text" name="username" autocomplete="off" class="form-control" placeholder="Username">
+            <input type="text" name="username" autocomplete="off"
+              class="form-control" placeholder="Username"
+              formControlName="username" [ngClass]="{
+              'is-invalid': form.controls.username.invalid && (form.controls.username.dirty || form.controls.username.touched),
+              'is-valid': form.controls.username.valid && (form.controls.username.dirty || form.controls.username.touched)
+              }">
+          </div>
+
+          <div class="text-danger" *ngIf="form.controls.username.errors && (form.controls.username.dirty || form.controls.username.touched)">
+            <p *ngIf="form.controls.username.errors?.required">Username is required.</p>
+            <p *ngIf="form.controls.username.errors?.minlength">Username must be at least (2) characters.</p>
+            <p *ngIf="form.controls.username.errors?.maxlength">Username must be at most (50) characters.</p>
           </div>
         </div>
 
@@ -20,7 +31,17 @@
             <div class="input-group-addon">
               <i class="fa fa-envelope" aria-hidden="true"></i>
             </div>
-            <input type="email" name="email" autocomplete="off" class="form-control" placeholder="Email">
+            <input type="email" name="email" autocomplete="off"
+              class="form-control" placeholder="Email" formControlName="email"
+              [ngClass]="{
+              'is-invalid': form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched),
+              'is-valid': form.controls.email.valid && (form.controls.email.dirty || form.controls.email.touched)
+              }">
+          </div>
+
+          <div class="text-danger" *ngIf="form.controls.email.errors && (form.controls.email.dirty || form.controls.email.touched)">
+            <p *ngIf="form.controls.email.errors?.required">Email is required.</p>
+            <p *ngIf="form.controls.email.errors?.invalidEmail">Email must be a valid email address.</p>
           </div>
         </div>
 
@@ -29,7 +50,16 @@
             <div class="input-group-addon">
               <i class="fa fa-key" aria-hidden="true"></i>
             </div>
-            <input type="password" name="password" class="form-control" placeholder="Password">
+            <input type="password" name="password" class="form-control"
+              placeholder="Password" formControlName="password" [ngClass]="{
+              'is-invalid': form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched),
+              'is-valid': form.controls.password.valid && (form.controls.password.dirty || form.controls.password.touched)
+              }">
+          </div>
+
+          <div class="text-danger" *ngIf="form.controls.password.errors && (form.controls.password.dirty || form.controls.password.touched)">
+            <p *ngIf="form.controls.password.errors?.required">Password is required.</p>
+            <p *ngIf="form.controls.password.errors?.minlength">Password must be at least (8) characters long.</p>
           </div>
         </div>
 
@@ -38,11 +68,21 @@
             <div class="input-group-addon">
               <i class="fa fa-lock fa-lg" aria-hidden="true"></i>
             </div>
-            <input type="password" name="confirmation" class="form-control" placeholder="Password Confirmation">
+            <input type="password" name="confirmation" class="form-control"
+              placeholder="Password Confirmation"
+              formControlName="confirmation" [ngClass]="{
+              'is-invalid': form.controls.confirmation.invalid && (form.controls.confirmation.dirty || form.controls.confirmation.touched),
+              'is-valid': form.controls.confirmation.valid && (form.controls.confirmation.dirty || form.controls.confirmation.touched)
+              }">
+          </div>
+
+          <div class="text-danger" *ngIf="form.controls.confirmation.errors && (form.controls.confirmation.dirty || form.controls.confirmation.touched)">
+            <p *ngIf="form.controls.confirmation.errors?.required">Password confirmation is required.</p>
           </div>
         </div>
 
-        <input type="button" class="btn btn-primary" value="Sign Up">
+        <input [disabled]="form.invalid" type="submit" class="btn btn-primary"
+          value="Sign Up">
       </form>
     </div>
   </div>

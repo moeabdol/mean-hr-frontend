@@ -17,10 +17,33 @@ export class SignupComponent implements OnInit {
 
   createForm() {
     this.form = this._formBuilder.group({
-      username: [''],
-      email: [''],
-      password: [''],
-      confirmation: ['']
+      username: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(50)
+      ])],
+      email: ['', Validators.compose([
+        Validators.required,
+        this.validateEmail
+      ])],
+      password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])],
+      confirmation: ['', Validators.required]
     });
+  }
+
+  validateEmail(control) {
+    const regExp = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
+    if (regExp.test(control.value)) {
+      return null;
+    } else {
+      return { 'invalidEmail': true };
+    }
+  }
+
+  onSubmit() {
+    console.log(this.form.value);
   }
 }
