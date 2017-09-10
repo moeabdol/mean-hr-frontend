@@ -55,4 +55,31 @@ describe('AuthService', () => {
 
     expect(response.message).toBe('User registered successfully.');
   });
+
+  it('should call /api/users/authenticate to authenticate new user', () => {
+    let request, requestBody, response;
+
+    backend.connections.subscribe(connection => {
+      request = connection.request;
+      requestBody = connection.request.json();
+
+      expect(request.url).toBe('http://localhost:3000/api/users/authenticate');
+      expect(request.headers.get('Content-Type')).toMatch(/application\/json/);
+
+      connection.mockRespond(new Response(<ResponseOptions> {
+        body: JSON.stringify({
+          token: 'JWT 12345',
+          message: 'User authenticated successfully.'
+        })
+      }));
+    });
+
+    service.authenticate({
+      username: 'hello user',
+      password: '12345678'
+    }).subscribe(data => response = data);
+
+    expect(response.message).toBe('User authenticated successfully.');
+    expect(response.token).toMatch(/JWT /);
+  });
 });
