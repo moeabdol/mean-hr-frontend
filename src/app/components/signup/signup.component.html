@@ -2,6 +2,8 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <br />
+      <flash-messages></flash-messages>
+
       <h2 class="display-5">Sign Up</h2>
       <hr />
 
@@ -82,7 +84,7 @@
           </div>
         </div>
 
-        <input [disabled]="form.invalid" type="submit" class="btn btn-primary"
+        <input [disabled]="form.invalid || processing" type="submit" class="btn btn-primary"
           value="Sign Up">
       </form>
     </div>

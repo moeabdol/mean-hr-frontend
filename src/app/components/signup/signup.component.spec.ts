@@ -1,7 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 import { SignupComponent } from './signup.component';
+import { AuthService } from '../../services/auth.service';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
@@ -9,8 +13,13 @@ describe('SignupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
-      declarations: [SignupComponent]
+      imports: [
+        ReactiveFormsModule,
+        HttpModule,
+        ToastModule.forRoot()
+      ],
+      declarations: [SignupComponent],
+      providers: [AuthService]
     })
     .compileComponents();
   }));

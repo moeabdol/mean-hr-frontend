@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { FlashMessagesService } from 'angular2-flash-messages';
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'signup',
@@ -8,8 +13,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SignupComponent implements OnInit {
   public form: FormGroup;
+  public processing = false;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder,
+              private _authService: AuthService,
+              private _router: Router,
+              private _flashService: FlashMessagesService) { }
 
   ngOnInit() {
     this.createForm();
@@ -56,7 +65,50 @@ export class SignupComponent implements OnInit {
     };
   }
 
+  enableForm() {
+    this.form.get('username').enable();
+    this.form.get('email').enable();
+    this.form.get('password').enable();
+    this.form.get('confirmation').enable();
+  }
+
+  disableForm() {
+    this.form.get('username').disable();
+    this.form.get('email').disable();
+    this.form.get('password').disable();
+    this.form.get('confirmation').disable();
+  }
+
   onSubmit() {
-    console.log(this.form.value);
+    this.processing = true;
+    this.disableForm();
+
+    const user = {
+      username: this.form.get('username').value,
+      email: this.form.get('email').value,
+      password: this.form.get('password').value
+    };
+
+    this._authService.register(user)
+      .subscribe(
+        data => {
+          this._flashService.show(data['message'], {
+            cssClass: 'alert alert-success',
+            timeout: 3000
+          });
+
+          setTimeout(() => {
+            this._router.navigate(['/']);
+          }, 3000);
+        },
+        err => {
+          this._flashService.show(err.json()['message'], {
+            cssClass: 'alert alert-danger',
+            timeout: 3000
+          });
+          this.processing = false;
+          this.enableForm();
+        }
+      );
   }
 }

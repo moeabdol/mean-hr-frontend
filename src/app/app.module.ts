@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
     NgbModule,
     ReactiveFormsModule,
     HttpModule,
+    FlashMessagesModule,
     RouterModule.forRoot(routes)
   ],
   providers: [AuthService],
