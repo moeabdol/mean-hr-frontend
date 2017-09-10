@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { SignupComponent } from './signup.component';
 import { AuthService } from '../../services/auth.service';
@@ -16,7 +17,8 @@ describe('SignupComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpModule,
-        ToastModule.forRoot()
+        RouterTestingModule,
+        FlashMessagesModule
       ],
       declarations: [SignupComponent],
       providers: [AuthService]
