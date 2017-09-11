@@ -1,6 +1,6 @@
 export class JwtHelper {
   private urlBase64Decode(str: string) {
-    let output = str.replace(/-/g, '+').replace(/_/g, '/');
+    let output = str.replace(/-/g, '+').replace(/_/g, '/').replace(/JWT /g, '');
     switch (output.length % 4) {
       case 0: { break; }
       case 2: { output += '=='; break; }

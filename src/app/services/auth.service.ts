@@ -15,6 +15,7 @@ export class AuthService {
   private _userUsername: string;
   private _userEmail: string;
   private _userRole: string;
+  private _expirationDate: Date;
 
   constructor(private _http: Http) {
     this._jwtHelper = new JwtHelper();
@@ -56,5 +57,15 @@ export class AuthService {
 
   getUserRole() {
     return this._jwtHelper.decodeToken(this.getToken())['role'];
+  }
+
+  getExpirationDate() {
+    return new Date(
+      this._jwtHelper.decodeToken(this.getToken())['exp'] * 1000
+    );
+  }
+
+  loggedIn() {
+    return this.getExpirationDate() > new Date();
   }
 }
