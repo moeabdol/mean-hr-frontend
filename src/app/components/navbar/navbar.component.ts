@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -8,5 +9,12 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService,
+              private _router: Router) { }
+
+  signOut() {
+    this.authService.clearToken();
+    this._router.navigate(['/signin']);
+    return false;
+  }
 }

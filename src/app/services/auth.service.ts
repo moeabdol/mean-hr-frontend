@@ -11,11 +11,6 @@ const domain = environment.domain;
 @Injectable()
 export class AuthService {
   private _jwtHelper: JwtHelper;
-  private _userId: number;
-  private _userUsername: string;
-  private _userEmail: string;
-  private _userRole: string;
-  private _expirationDate: Date;
 
   constructor(private _http: Http) {
     this._jwtHelper = new JwtHelper();
@@ -43,6 +38,10 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  clearToken() {
+    localStorage.removeItem('token');
+  }
+
   getUserId() {
     return this._jwtHelper.decodeToken(this.getToken())['id'];
   }
@@ -65,7 +64,10 @@ export class AuthService {
     );
   }
 
-  loggedIn() {
-    return this.getExpirationDate() > new Date();
+  signedIn() {
+    if (localStorage.getItem('token')) {
+      return this.getExpirationDate() > new Date();
+    }
+    return false;
   }
 }

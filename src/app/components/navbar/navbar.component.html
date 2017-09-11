@@ -12,16 +12,16 @@
     </ul>
 
     <ul class="navbar-nav ml-auto">
-      <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']">
+      <li *ngIf="!authService.signedIn()" class="nav-item" [routerLinkActive]="['active']">
         <a class="nav-link" routerLink="/signin">Sign In</a>
       </li>
 
-      <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']">
+      <li *ngIf="!authService.signedIn()" class="nav-item" [routerLinkActive]="['active']">
         <a class="nav-link" routerLink="/signup">Sign Up</a>
       </li>
 
-      <li *ngIf="authService.loggedIn()" class="nav-item">
-        <a class="nav-link" href="#">Sign Out</a>
+      <li *ngIf="authService.signedIn()" class="nav-item">
+        <a class="nav-link" href="#" (click)="signOut()">Sign Out</a>
       </li>
     </ul>
   </div>

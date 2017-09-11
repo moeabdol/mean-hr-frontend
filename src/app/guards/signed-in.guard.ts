@@ -9,7 +9,7 @@ export class SignedInGuard implements CanActivate {
   constructor(private _authService: AuthService) { }
 
   canActivate() {
-    if (this._authService.loggedIn()) { return true; }
+    if (this._authService.signedIn()) { return true; }
     return false;
   }
 }
