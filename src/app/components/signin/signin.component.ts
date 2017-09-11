@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
 import { AuthService } from '../../services/auth.service';
+import { SignedInGuard } from '../../guards/signed-in.guard';
 
 @Component({
   selector: 'signin',
@@ -14,14 +15,21 @@ import { AuthService } from '../../services/auth.service';
 export class SigninComponent implements OnInit {
   public form: FormGroup;
   public processing = false;
+  public previousUrl: string;
 
   constructor(private _formBuilder: FormBuilder,
               private _authService: AuthService,
+              private _signedInGuard: SignedInGuard,
               private _router: Router,
               private _flashService: FlashMessagesService) { }
 
   ngOnInit() {
     this.createForm();
+
+    if ( this._signedInGuard.redirectUrl) {
+      this.previousUrl = this._signedInGuard.redirectUrl;
+      this._signedInGuard.redirectUrl = undefined;
+    }
   }
 
   createForm() {
@@ -68,7 +76,11 @@ export class SigninComponent implements OnInit {
           });
 
           setTimeout(() => {
-            this._router.navigate(['/']);
+            if (this.previousUrl) {
+              this._router.navigate([this.previousUrl]);
+            } else {
+              this._router.navigate(['/']);
+            }
           }, 3000);
         },
         err => {

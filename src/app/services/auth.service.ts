@@ -70,4 +70,11 @@ export class AuthService {
     }
     return false;
   }
+
+  isAdmin() {
+    if (localStorage.getItem('token')) {
+      return this.getUserRole() === 'admin';
+    }
+    return false;
+  }
 }
