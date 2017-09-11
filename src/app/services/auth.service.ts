@@ -4,11 +4,21 @@ import 'rxjs/add/operator/map';
 
 import { environment } from '../../environments/environment';
 
+import { JwtHelper } from '../helpers/jwt-helper';
+
 const domain = environment.domain;
 
 @Injectable()
 export class AuthService {
-  constructor(private _http: Http) { }
+  private _jwtHelper: JwtHelper;
+  private _userId: number;
+  private _userUsername: string;
+  private _userEmail: string;
+  private _userRole: string;
+
+  constructor(private _http: Http) {
+    this._jwtHelper = new JwtHelper();
+  }
 
   register(user) {
     const headers = new Headers();
@@ -24,11 +34,27 @@ export class AuthService {
       { headers }).map(res => res.json());
   }
 
-  saveToken(token) {
+  setToken(token) {
     localStorage.setItem('token', token);
   }
 
-  loadToken() {
+  getToken() {
     return localStorage.getItem('token');
+  }
+
+  getUserId() {
+    return this._jwtHelper.decodeToken(this.getToken())['id'];
+  }
+
+  getUserUsername() {
+    return this._jwtHelper.decodeToken(this.getToken())['username'];
+  }
+
+  getUserEmail() {
+    return this._jwtHelper.decodeToken(this.getToken())['email'];
+  }
+
+  getUserRole() {
+    return this._jwtHelper.decodeToken(this.getToken())['role'];
   }
 }

@@ -60,7 +60,7 @@ export class SigninComponent implements OnInit {
     this._authService.authenticate(user)
       .subscribe(
         data => {
-          this._authService.saveToken(data['token']);
+          this._authService.setToken(data['token']);
 
           this._flashService.show(data['message'], {
             cssClass: 'alert alert-success',
