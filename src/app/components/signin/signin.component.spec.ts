@@ -7,6 +7,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { SigninComponent } from './signin.component';
 import { AuthService } from '../../services/auth.service';
+import { SignedInGuard } from '../../guards/signed-in.guard';
 
 describe('SigninComponent', () => {
   let component: SigninComponent;
@@ -21,7 +22,7 @@ describe('SigninComponent', () => {
         FlashMessagesModule
       ],
       declarations: [SigninComponent],
-      providers: [AuthService]
+      providers: [AuthService, SignedInGuard]
     })
     .compileComponents();
   }));
