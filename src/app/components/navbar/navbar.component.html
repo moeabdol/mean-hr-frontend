@@ -12,6 +12,10 @@
     </ul>
 
     <ul class="navbar-nav ml-auto">
+      <li *ngIf="authService.signedIn()" class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+      </li>
+
       <li *ngIf="!authService.signedIn()" class="nav-item" [routerLinkActive]="['active']">
         <a class="nav-link" routerLink="/signin">Sign In</a>
       </li>
