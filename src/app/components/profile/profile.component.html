@@ -1,3 +1,76 @@
-<p>
-  profile works!
-</p>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12 col-lg-4">
+      <img class="img-thumbnail rounded float-left profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />
+      <button type="button" class="btn btn-primary mt-3 mb-3">Upload Image</button>
+    </div>
+
+    <div class="col-md-12 col-lg-5">
+      <strong>Username:</strong> Mohammad<br />
+      <strong>Email:</strong> admin.r99@gmail.com<br />
+      <strong>Role:</strong> Staff<br />
+
+      <br />
+
+      <h5>Change Password</h5>
+      <form [formGroup]="form" class="mt-3" (submit)="onPasswordChangeSubmit()">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-key" aria-hidden="true"></i>
+            </div>
+            <input type="password" name="oldPassword" class="form-control"
+              placeholder="Old Password" formControlName="oldPassword"
+              [ngClass]="{
+              'is-invalid': form.controls.oldPassword.invalid && (form.controls.oldPassword.dirty || form.controls.oldPassword.touched),
+              'is-valid': form.controls.oldPassword.valid && (form.controls.oldPassword.dirty || form.controls.oldPassword.touched)
+              }">
+          </div>
+          <div class="text-danger" *ngIf="form.controls.oldPassword.errors && (form.controls.oldPassword.dirty || form.controls.oldPassword.touched)">
+            <p *ngIf="form.controls.oldPassword.errors?.required">Old password is required.</p>
+            <p *ngIf="form.controls.oldPassword.errors?.minlength">Old password must be at least (8) characters.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-key" aria-hidden="true"></i>
+            </div>
+            <input type="password" name="newPassword" class="form-control"
+              placeholder="New Password" formControlName="newPassword"
+              [ngClass]="{
+              'is-invalid': form.controls.newPassword.invalid && (form.controls.newPassword.dirty || form.controls.newPassword.touched),
+              'is-valid': form.controls.newPassword.valid && (form.controls.newPassword.dirty || form.controls.newPassword.touched)
+              }">
+          </div>
+          <div class="text-danger" *ngIf="form.controls.newPassword.errors && (form.controls.newPassword.dirty || form.controls.newPassword.touched)">
+            <p *ngIf="form.controls.newPassword.errors?.required">New password is required.</p>
+            <p *ngIf="form.controls.oldPassword.errors?.minlength">New password must be at least (8) characters.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-key" aria-hidden="true"></i>
+            </div>
+            <input type="password" name="newPasswordConfirmation"
+              class="form-control" placeholder="New Password Confirmation"
+              formControlName="newPasswordConfirmation"
+              [ngClass]="{
+              'is-invalid': form.controls.newPasswordConfirmation.invalid && (form.controls.newPasswordConfirmation.dirty || form.controls.newPasswordConfirmation.touched),
+              'is-valid': form.controls.newPasswordConfirmation.valid && (form.controls.newPasswordConfirmation.dirty || form.controls.newPasswordConfirmation.touched)
+              }">
+          </div>
+          <div class="text-danger" *ngIf="form.controls.newPasswordConfirmation.errors && (form.controls.newPasswordConfirmation.dirty || form.controls.newPasswordConfirmation.touched)">
+            <p *ngIf="form.controls.newPasswordConfirmation.errors?.required">New password confirmation is required.</p>
+            <p *ngIf="form.controls.oldPassword.errors?.minlength">New password confirmation must be at least (8) characters.</p>
+          </div>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Change Password">
+      </form>
+    </div>
+  </div>
+</div>
