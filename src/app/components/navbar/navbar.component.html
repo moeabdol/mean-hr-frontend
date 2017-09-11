@@ -24,8 +24,22 @@
         <a class="nav-link" routerLink="/signup">Sign Up</a>
       </li>
 
-      <li *ngIf="authService.signedIn()" class="nav-item">
-        <a class="nav-link" href="#" (click)="signOut()">Sign Out</a>
+      <li class="nav-item dropdown" *ngIf="authService.signedIn()">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ authService.getUserUsername() }}
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="/profile">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            Profile
+          </a>
+
+          <a class="dropdown-item" href="#" (click)="signOut()">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            Sign Out
+          </a>
+        </div>
       </li>
     </ul>
   </div>

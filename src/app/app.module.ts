@@ -13,6 +13,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { AuthService } from './services/auth.service';
 import { SignedInGuard } from './guards/signed-in.guard';
 import { SignedOutGuard } from './guards/signed-out.guard';
@@ -35,6 +36,10 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [SignedInGuard, AdminGuard]
+  },
+  { path: 'profile',
+    component: ProfileComponent,
+    canActivate: [SignedInGuard]
   }
 ];
 
@@ -45,7 +50,8 @@ const routes: Routes = [
     HomeComponent,
     SignupComponent,
     SigninComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

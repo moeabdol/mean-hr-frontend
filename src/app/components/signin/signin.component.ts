@@ -79,7 +79,7 @@ export class SigninComponent implements OnInit {
             if (this.previousUrl) {
               this._router.navigate([this.previousUrl]);
             } else {
-              this._router.navigate(['/']);
+              this._router.navigate(['/profile']);
             }
           }, 3000);
         },
