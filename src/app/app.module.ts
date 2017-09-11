@@ -15,13 +15,22 @@ import { SigninComponent } from './components/signin/signin.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthService } from './services/auth.service';
 import { SignedInGuard } from './guards/signed-in.guard';
+import { SignedOutGuard } from './guards/signed-out.guard';
 import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', redirectTo: '', pathMatch: 'full' },
-  { path: 'signup', component: SignupComponent },
-  { path: 'signin', component: SigninComponent },
+  {
+    path: 'signup',
+    component: SignupComponent,
+    canActivate: [SignedOutGuard]
+  },
+  {
+    path: 'signin',
+    component: SigninComponent,
+    canActivate: [SignedOutGuard]
+  },
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -46,7 +55,7 @@ const routes: Routes = [
     FlashMessagesModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthService, SignedInGuard, AdminGuard],
+  providers: [AuthService, SignedInGuard, SignedOutGuard, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
