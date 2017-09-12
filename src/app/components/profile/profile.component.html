@@ -10,14 +10,18 @@
 
   <div class="row justify-content-center">
     <div class="col-md-12 col-lg-4">
-      <img class="img-thumbnail rounded float-left profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />
-      <button type="button" class="btn btn-primary mt-3 mb-3">Upload Image</button>
+      <img *ngIf="!user.avatar" class="img-thumbnail rounded float-left profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />
+      <img *ngIf="user.avatar" class="img-thumbnail rounded float-left profile-img" src="{{ user.avatar }}" />
+      <label class="btn-bs-file btn btn-primary mt-2">
+        Upload Avatar
+        <input [disabled]="uploading" type="file" id="avatar" (change)="onUploadAvatarChange()">
+      </label>
     </div>
 
     <div class="col-md-12 col-lg-5">
-      <strong>Username:</strong> Mohammad<br />
-      <strong>Email:</strong> admin.r99@gmail.com<br />
-      <strong>Role:</strong> Staff<br />
+      <strong>Username:</strong> {{ user.username }}<br />
+      <strong>Email:</strong> {{ user.email }}<br />
+      <strong>Role:</strong> {{ user.role }}<br />
 
       <br />
 

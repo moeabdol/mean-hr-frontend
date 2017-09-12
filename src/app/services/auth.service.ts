@@ -30,6 +30,15 @@ export class AuthService {
       { headers }).map(res => res.json());
   }
 
+  getCurrentUserInfo() {
+    const id = this.getUserId();
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', this.getToken());
+    return this._http.get(domain + `/api/users/${id}`, { headers })
+      .map(res => res.json());
+  }
+
   changeUserPassword(oldPassword, newPassword) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -38,6 +47,13 @@ export class AuthService {
       oldPassword,
       newPassword
     }, { headers }).map(res => res.json());
+  }
+
+  uploadUserAvatar(avatar) {
+    const headers = new Headers();
+    headers.append('Authorization', this.getToken());
+    return this._http.post(domain + '/api/users/uploadavatar', avatar,
+      { headers }).map(res => res.json());
   }
 
   setToken(token) {

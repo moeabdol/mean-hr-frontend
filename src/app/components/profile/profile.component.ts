@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -13,13 +13,39 @@ import { AuthService } from '../../services/auth.service';
 export class ProfileComponent implements OnInit {
   public form: FormGroup;
   public processing = false;
+  public user = {
+    username: '',
+    email: '',
+    role: '',
+    avatar: ''
+  };
 
   constructor(private _formBuilder: FormBuilder,
               private _authService: AuthService,
-              private _flashService: FlashMessagesService) { }
+              private _flashService: FlashMessagesService,
+              private _elem: ElementRef) { }
 
   ngOnInit() {
     this.createForm();
+    this.loadCurrentUser();
+  }
+
+  loadCurrentUser() {
+    this._authService.getCurrentUserInfo()
+      .subscribe(
+        data => {
+          this.user.username = data['username'];
+          this.user.email = data['email'];
+          this.user.role = data['role'];
+          this.user.avatar = data['avatar'];
+        },
+        err => {
+          this._flashService.show(err.json()['message'], {
+            cssClass: 'alert alert-danger',
+            timeout: 3000
+          });
+        }
+      );
   }
 
   createForm() {
@@ -94,6 +120,27 @@ export class ProfileComponent implements OnInit {
         this.enableForm();
       }
     );
+  }
 
+  onUploadAvatarChange() {
+    const file = this._elem.nativeElement.querySelector('#avatar').files[0];
+    const formData = new FormData();
+    formData.append('avatar', file, file.name);
+
+    this._authService.uploadUserAvatar(formData).subscribe(
+      data => {
+        this._flashService.show(data['message'], {
+          cssClass: 'alert alert-success',
+          timeout: 3000
+        });
+        this.loadCurrentUser();
+      },
+      err => {
+        this._flashService.show(err.json()['message'], {
+          cssClass: 'alert alert-danger',
+          timeout: 3000
+        });
+      }
+    );
   }
 }
