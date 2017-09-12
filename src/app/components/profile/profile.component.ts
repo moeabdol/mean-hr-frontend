@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { FlashMessagesService } from 'angular2-flash-messages';
+
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -13,7 +15,8 @@ export class ProfileComponent implements OnInit {
   public processing = false;
 
   constructor(private _formBuilder: FormBuilder,
-              private _authService: AuthService) { }
+              private _authService: AuthService,
+              private _flashService: FlashMessagesService) { }
 
   ngOnInit() {
     this.createForm();
@@ -71,13 +74,26 @@ export class ProfileComponent implements OnInit {
       this.form.get('newPassword').value
     ).subscribe(
       data => {
-        console.log(data);
+        this._flashService.show(data['message'], {
+          cssClass: 'alert alert-success',
+          timeout: 3000
+        });
+
+        setTimeout(() => {
+          this.processing = false;
+          this.enableForm();
+          this.form.reset();
+        }, 3000);
       },
       err => {
-        console.log(err);
+        this._flashService.show(err.json()['message'], {
+          cssClass: 'alert alert-danger',
+          timeout: 3000
+        });
         this.processing = false;
         this.enableForm();
       }
     );
+
   }
 }
