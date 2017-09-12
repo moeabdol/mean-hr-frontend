@@ -14,7 +14,7 @@ export class NavbarComponent {
 
   signOut() {
     this.authService.clearToken();
-    this._router.navigate(['/signin']);
+    this._router.navigate(['/']);
     return false;
   }
 }
