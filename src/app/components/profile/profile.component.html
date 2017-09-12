@@ -70,13 +70,15 @@
               'is-valid': form.controls.newPasswordConfirmation.valid && (form.controls.newPasswordConfirmation.dirty || form.controls.newPasswordConfirmation.touched)
               }">
           </div>
-          <div class="text-danger" *ngIf="form.controls.newPasswordConfirmation.errors && (form.controls.newPasswordConfirmation.dirty || form.controls.newPasswordConfirmation.touched)">
+          <div class="text-danger"
+            *ngIf="(form.controls.newPasswordConfirmation.errors && (form.controls.newPasswordConfirmation.dirty || form.controls.newPasswordConfirmation.touched)) || (form.errors?.mismatch && (form.controls.newPasswordConfirmation.dirty || form.controls.newPasswordConfirmation.touched))">
             <p *ngIf="form.controls.newPasswordConfirmation.errors?.required">New password confirmation is required.</p>
-            <p *ngIf="form.controls.oldPassword.errors?.minlength">New password confirmation must be at least (8) characters.</p>
+            <p *ngIf="form.controls.newPasswordConfirmation.errors?.minlength">New password confirmation must be at least (8) characters.</p>
+            <p *ngIf="form.errors?.mismatch">New password and confirmation do not match.</p>
           </div>
         </div>
 
-        <input type="submit" class="btn btn-primary" value="Change Password">
+        <input [disabled]="form.invalid || processing" type="submit" class="btn btn-primary" value="Change Password">
       </form>
     </div>
   </div>

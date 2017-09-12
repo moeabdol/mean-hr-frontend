@@ -30,6 +30,16 @@ export class AuthService {
       { headers }).map(res => res.json());
   }
 
+  changeUserPassword(oldPassword, newPassword) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', this.getToken());
+    return this._http.post(domain + '/api/users/changepassword', {
+      oldPassword,
+      newPassword
+    }, { headers }).map(res => res.json());
+  }
+
   setToken(token) {
     localStorage.setItem('token', token);
   }
